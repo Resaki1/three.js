@@ -17804,6 +17804,7 @@
 			let framebufferScaleFactor = 1.0;
 			let referenceSpace = null;
 			let referenceSpaceType = 'local-floor';
+			let offsetReferenceSpace = null;
 			const hasMultisampledRenderToTexture = renderer.extensions.has('WEBGL_multisampled_render_to_texture');
 			let pose = null;
 			let glBinding = null;
@@ -17931,6 +17932,18 @@
 
 			this.getFrame = function () {
 				return xrFrame;
+			};
+
+			this.getOffsetReferenceSpace = function () {
+				return offsetReferenceSpace;
+			};
+
+			this.setOffsetReferenceSpace = function (space) {
+				offsetReferenceSpace = space;
+			};
+
+			this.resetOffsetReferenceSpace = function () {
+				offsetReferenceSpace = null;
 			};
 
 			this.getSession = function () {
@@ -18196,7 +18209,7 @@
 			let onAnimationFrameCallback = null;
 
 			function onAnimationFrame(time, frame) {
-				pose = frame.getViewerPose(referenceSpace);
+				pose = frame.getViewerPose(offsetReferenceSpace || referenceSpace);
 				xrFrame = frame;
 
 				if (pose !== null) {
@@ -18251,7 +18264,7 @@
 				for (let i = 0; i < controllers.length; i++) {
 					const controller = controllers[i];
 					const inputSource = inputSources[i];
-					controller.update(inputSource, frame, referenceSpace);
+					controller.update(inputSource, frame, offsetReferenceSpace || referenceSpace);
 				}
 
 				if (onAnimationFrameCallback) onAnimationFrameCallback(time, frame);

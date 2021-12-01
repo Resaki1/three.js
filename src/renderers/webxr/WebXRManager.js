@@ -31,6 +31,7 @@ class WebXRManager extends EventDispatcher {
 
 		let referenceSpace = null;
 		let referenceSpaceType = 'local-floor';
+		let offsetReferenceSpace = null;
 		const hasMultisampledRenderToTexture = renderer.extensions.has( 'WEBGL_multisampled_render_to_texture' );
 
 		let pose = null;
@@ -209,6 +210,24 @@ class WebXRManager extends EventDispatcher {
 		this.getFrame = function () {
 
 			return xrFrame;
+
+		};
+
+		this.getOffsetReferenceSpace = function () {
+
+			return offsetReferenceSpace;
+
+		};
+
+		this.setOffsetReferenceSpace = function ( space ) {
+
+			offsetReferenceSpace = space;
+
+		};
+
+		this.resetOffsetReferenceSpace = function () {
+
+			offsetReferenceSpace = null;
 
 		};
 
@@ -572,7 +591,7 @@ class WebXRManager extends EventDispatcher {
 
 		function onAnimationFrame( time, frame ) {
 
-			pose = frame.getViewerPose( referenceSpace );
+			pose = frame.getViewerPose( offsetReferenceSpace || referenceSpace );
 			xrFrame = frame;
 
 			if ( pose !== null ) {
@@ -657,7 +676,7 @@ class WebXRManager extends EventDispatcher {
 				const controller = controllers[ i ];
 				const inputSource = inputSources[ i ];
 
-				controller.update( inputSource, frame, referenceSpace );
+				controller.update( inputSource, frame, offsetReferenceSpace || referenceSpace );
 
 			}
 
