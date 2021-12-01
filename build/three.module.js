@@ -24107,6 +24107,10 @@ class WebXRManager extends EventDispatcher {
 
 		};
 
+		this.setReferenceSpace = function (newSpace) {
+			referenceSpace = newSpace;
+		};
+
 		this.getBaseLayer = function () {
 
 			return glProjLayer !== null ? glProjLayer : glBaseLayer;
