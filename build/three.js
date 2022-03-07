@@ -17803,8 +17803,8 @@
 			let session = null;
 			let framebufferScaleFactor = 1.0;
 			let referenceSpace = null;
-			let referenceSpaceType = 'local-floor';
-			const hasMultisampledRenderToTexture = renderer.extensions.has('WEBGL_multisampled_render_to_texture');
+			let referenceSpaceType = "local-floor";
+			const hasMultisampledRenderToTexture = renderer.extensions.has("WEBGL_multisampled_render_to_texture");
 			let pose = null;
 			let glBinding = null;
 			let glProjLayer = null;
@@ -17897,7 +17897,7 @@
 				animation.stop();
 				scope.isPresenting = false;
 				scope.dispatchEvent({
-					type: 'sessionend'
+					type: "sessionend"
 				});
 			}
 
@@ -17905,7 +17905,7 @@
 				framebufferScaleFactor = value;
 
 				if (scope.isPresenting === true) {
-					console.warn('THREE.WebXRManager: Cannot change framebuffer scale while presenting.');
+					console.warn("THREE.WebXRManager: Cannot change framebuffer scale while presenting.");
 				}
 			};
 
@@ -17913,12 +17913,16 @@
 				referenceSpaceType = value;
 
 				if (scope.isPresenting === true) {
-					console.warn('THREE.WebXRManager: Cannot change reference space type while presenting.');
+					console.warn("THREE.WebXRManager: Cannot change reference space type while presenting.");
 				}
 			};
 
 			this.getReferenceSpace = function () {
 				return referenceSpace;
+			};
+
+			this.setReferenceSpace = function (newSpace) {
+				referenceSpace = newSpace;
 			};
 
 			this.getBaseLayer = function () {
@@ -17942,14 +17946,14 @@
 
 				if (session !== null) {
 					initialRenderTarget = renderer.getRenderTarget();
-					session.addEventListener('select', onSessionEvent);
-					session.addEventListener('selectstart', onSessionEvent);
-					session.addEventListener('selectend', onSessionEvent);
-					session.addEventListener('squeeze', onSessionEvent);
-					session.addEventListener('squeezestart', onSessionEvent);
-					session.addEventListener('squeezeend', onSessionEvent);
-					session.addEventListener('end', onSessionEnd);
-					session.addEventListener('inputsourceschange', onInputSourcesChange);
+					session.addEventListener("select", onSessionEvent);
+					session.addEventListener("selectstart", onSessionEvent);
+					session.addEventListener("selectend", onSessionEvent);
+					session.addEventListener("squeeze", onSessionEvent);
+					session.addEventListener("squeezestart", onSessionEvent);
+					session.addEventListener("squeezeend", onSessionEvent);
+					session.addEventListener("end", onSessionEnd);
+					session.addEventListener("inputsourceschange", onInputSourcesChange);
 
 					if (attributes.xrCompatible !== true) {
 						await gl.makeXRCompatible();
@@ -18020,7 +18024,7 @@
 					animation.start();
 					scope.isPresenting = true;
 					scope.dispatchEvent({
-						type: 'sessionstart'
+						type: "sessionstart"
 					});
 				}
 			};
@@ -18039,7 +18043,7 @@
 
 					if (controller) {
 						controller.dispatchEvent({
-							type: 'disconnected',
+							type: "disconnected",
 							data: inputSource
 						});
 						inputSourcesMap.delete(inputSource);
@@ -18053,7 +18057,7 @@
 
 					if (controller) {
 						controller.dispatchEvent({
-							type: 'connected',
+							type: "connected",
 							data: inputSource
 						});
 					}
